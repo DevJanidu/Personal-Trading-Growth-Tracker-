@@ -2,24 +2,19 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
      * Seed the application's database.
+     *
+     * Note: deliberately does NOT use WithoutModelEvents — TradingAccount/Strategy
+     * rely on their `creating` model event to generate a uuid (App\Models\Concerns\HasUuid)
+     * and Strategy additionally auto-slugs from its name in that same event.
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $this->call(DemoUserSeeder::class);
     }
 }
